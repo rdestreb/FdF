@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/14 13:38:09 by rdestreb          #+#    #+#             */
-/*   Updated: 2014/12/14 14:37:45 by rdestreb         ###   ########.fr       */
+/*   Updated: 2014/12/15 17:23:49 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ struct	s_disp
 {
 	void	*mlx;
 	void	*win;
+	int		win_size;
 };
 
 #endif
