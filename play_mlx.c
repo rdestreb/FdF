@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/14 13:42:05 by rdestreb          #+#    #+#             */
-/*   Updated: 2014/12/15 20:45:26 by rdestreb         ###   ########.fr       */
+/*   Updated: 2014/12/16 18:43:37 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,27 @@
 
 void	draw_line(t_disp *d, t_coord *p1, t_coord *p2)
 {
-	int	ori;
+	int	o;
+	int p;
 
-	if (p2->x >= p2->y)
+	if (abs(p1->x - p2->x) >= abs(p1->y - p2->y))
 	{
-		ori = p1->x;
+		o = p1->x;
 		while (abs(p1->x - p2->x))
 		{
-			mlx_pixel_put(d->mlx, d->win, p1->x, p1->y + ((p1->x - ori) * (p2->y - p1->y)/(p2->x - ori)), 0xFF6600);
-			if (p1->x < p2->x)
-				p1->x++;
-			else if (p1->x > p2->x)
-				p1->x--;
+			p = p1->y + ((p1->x - o) * (p2->y - p1->y) / (p2->x - o));
+			mlx_pixel_put(d->mlx, d->win, p1->x, p, 0xFF6600);
+			(p1->x < p2->x ? p1->x++ : p1->x--);
 		}
 	}
 	else
 	{
-		ori = p1->y;
+		o = p1->y;
 		while (abs(p1->y - p2->y))
 		{
-			mlx_pixel_put(d->mlx, d->win, p1->x + ((p1->y - ori) * (p2->x - p1->x)/(p2->y - ori)), p1->y, 0x0000FF);
-			if (p1->y < p2->y)
-				p1->y++;
-			else if (p1->y > p2->y)
-				p1->y--;
+			p = p1->x + ((p1->y - o) * (p2->x - p1->x) / (p2->y - o));
+			mlx_pixel_put(d->mlx, d->win, p, p1->y, 0x0000FF);
+			(p1->y < p2->y ? p1->y++ : p1->y--);
 		}
 	}
 }
@@ -61,8 +58,8 @@ void	draw_rep(t_disp *d)
 	ord1->y = 0;
 	ord2->x = d->win_size/2;
 	ord2->y = d->win_size;
-	draw_line(d, abs2, abs1);
-	draw_line(d, ord2, ord1);
+	draw_line(d, abs1, abs2);
+	draw_line(d, ord1, ord2);
 }
 
 void	draw_diag(t_disp *d)
@@ -118,31 +115,49 @@ void draw_function(t_disp *d)
 		c->x++;
 	}
 }
-/*
-void	draw_circle(t_disp *d, int win_size)
+
+void	draw_ellipse(t_disp *d, int x0, int y0, int r1, int r2)
 {
 	t_coord *c;
 	double	alpha;
-	double	pi;
 
 	alpha = 0;
-	pi = 3.1416
 	c = (t_coord *)ft_memalloc(sizeof(t_coord));
-	while (alpha < 2)
-
+	while (alpha < 2 * M_PI)
+	{
+		c->x = cos(alpha) * r1 + x0;
+		c->y = sin(alpha) * r2 + y0;
+		mlx_pixel_put(d->mlx, d->win, c->x, c->y, 0xFF0000);
+		alpha += (2 * M_PI) / (8 * r1);
+	}
 }
-*/
+
+void	draw_circle(t_disp *d, int x0, int y0, int r)
+{
+	t_coord *c;
+	double	alpha;
+
+	alpha = 0;
+	c = (t_coord *)ft_memalloc(sizeof(t_coord));
+	while (alpha < 2 * M_PI)
+	{
+		c->x = cos(alpha) * r + x0;
+		c->y = sin(alpha) * r + y0;
+		mlx_pixel_put(d->mlx, d->win, c->x, c->y, 0x00FF00);
+		alpha += (2 * M_PI) / (8 * r);
+	}
+}
+
 void	draw_square(t_disp *d)
 {
 	t_coord *c;
 
 	c = (t_coord *)ft_memalloc(sizeof(t_coord));
 	c->x = d->win_size * 0.25;
-	printf("win size = %d\n", d->win_size);
-	while (c->x < d->win_size * 0.75)
+	while (c->x <= d->win_size * 0.75)
 	{
 		c->y = d->win_size * 0.25;
-		while (c->y < d->win_size * 0.75)
+		while (c->y <= d->win_size * 0.75)
 		{
 			mlx_pixel_put(d->mlx, d->win, c->x, c->y, 0xFF6600);
 			c->y++;
@@ -151,12 +166,45 @@ void	draw_square(t_disp *d)
 	}
 }
 
+void	draw_cube(t_disp *d)
+{
+	t_coord *c;
+
+	c = (t_coord *)ft_memalloc(sizeof(t_coord));
+	c->x = d->win_size * 0.25;
+	while (c->x <= d->win_size * 0.75)
+	{
+		c->y = d->win_size * 0.25;
+		while (c->y <= d->win_size * 0.75)
+		{
+			c->z = -1;
+			while (++c->z <= 100)
+			{
+				if (c->x == d->win_size*0.75 && c->y == d->win_size*0.25)
+					mlx_pixel_put(d->mlx, d->win, c->x + c->z, c->y - c->z, 0x000000);
+				else if (c->y == d->win_size * 0.25)
+					mlx_pixel_put(d->mlx, d->win, c->x + c->z, c->y - c->z, 0x808080);
+				else if (c->x == d->win_size * 0.75)
+					mlx_pixel_put(d->mlx, d->win, c->x + c->z, c->y - c->z, 0x808080);
+				else
+					mlx_pixel_put(d->mlx, d->win, c->x + c->z, c->y - c->z, 0xFF6600);
+			}
+			c->y++;
+		}
+		c->x++;
+	}
+}
+
 int		expose_hook(t_disp *d)
 {
-//	draw_rep(d);
+	draw_rep(d);
 //	draw_function(d);
 	draw_diag(d);
 //	draw_square(d);
+//	draw_cube(d);
+	draw_circle(d, d->win_size/2, d->win_size/2, d->win_size/2);
+	draw_ellipse(d, d->win_size/2, d->win_size/2, 250, 400);
+	draw_ellipse(d, d->win_size/2, d->win_size/2, 400, 200);
 	return (0);
 }
 
