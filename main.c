@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/20 11:53:25 by rdestreb          #+#    #+#             */
-/*   Updated: 2014/12/20 16:32:53 by rdestreb         ###   ########.fr       */
+/*   Updated: 2014/12/20 18:56:32 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ t_coord	*get_coord(char *line, t_coord *lst)
 	i = -1;
 	while (points[++i])
 	{
-		ft_putendl("coucou");
 		c->x = i;
 		c->y = ft_atoi(points[i]);
 //		printf("x = %d\ny = %d\nz = %d\n\n", c->x, c->y, c->z);
@@ -47,7 +46,7 @@ void	read_map(char *path)
 {
 	int		fd;
 	int 	gnl;
-	t_coord		*lst;
+	t_coord	*lst;
 	char	*line;
 
 	if (!(fd = open(path, O_RDONLY, S_IRUSR)))
@@ -59,7 +58,8 @@ void	read_map(char *path)
 //		ft_putendl(line);
 		lst = get_coord(line, lst);
 	}
-	disp_lst(lst);
+//	disp_lst(lst);
+	main_draw();
 	close (fd);
 }
 

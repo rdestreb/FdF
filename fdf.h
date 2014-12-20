@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/14 13:38:09 by rdestreb          #+#    #+#             */
-/*   Updated: 2014/12/20 16:24:15 by rdestreb         ###   ########.fr       */
+/*   Updated: 2014/12/20 18:44:35 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ struct	s_disp
 void	read_map(char *path);
 t_coord	*get_coord(char *line, t_coord *lst);
 void	print_error(char *error);
-void	main_draw(t_coord *c);
+void	main_draw(void);
 int		mouse_hook(int button, int x, int y, t_disp *d);
 int		key_hook(int keycode, t_disp *d);
 int		expose_hook(t_disp *d);

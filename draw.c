@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/20 14:41:45 by rdestreb          #+#    #+#             */
-/*   Updated: 2014/12/20 15:22:49 by rdestreb         ###   ########.fr       */
+/*   Updated: 2014/12/20 19:08:12 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,18 @@ int     expose_hook(t_disp *d)
 	double	cst;
 	int		X;
 	int		Y;
+	t_coord	*c;
 
+	c = init_lst();
+	c = c->next;
 	cst = 1;
-	X = d->c->x + cst * d->c->z + d->win_size/2;
-	Y = d->c->y + cst/2 * d->c->z + d->win_size/2;
-	mlx_pixel_put(d->mlx, d->win, X, Y, 0xFF6600);
+	while (c)
+	{
+		X = (c->x * 20 + cst * c->z * 20);
+		Y = (cst/2 * c->z * 20 - c->y * 20);
+		mlx_pixel_put(d->mlx, d->win, X, Y + 500, 0xFF6600);
+		c = c->next;
+	}
 	return (0);
 }
 
@@ -56,12 +63,11 @@ int     mouse_hook(int button, int x, int y, t_disp *d)
 }
 
 
-void	main_draw(t_coord *c)
+void	main_draw(void)
 {
 	t_disp  *d;
 
 	d = (t_disp *)ft_memalloc(sizeof(t_disp));
-	d->c = c;
 	d->win_size = 1000;
 	d->mlx = mlx_init();
 	d->win = mlx_new_window(d->mlx, d->win_size, d->win_size, "test window");

@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/20 15:37:36 by rdestreb          #+#    #+#             */
-/*   Updated: 2014/12/20 16:33:50 by rdestreb         ###   ########.fr       */
+/*   Updated: 2014/12/20 18:35:12 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ t_coord	*add_link(t_coord *c)
 	t_coord	*add;
 
 	add = (t_coord *)ft_memalloc(sizeof(t_coord));
-	add = c;
+	add->x = c->x;
+	add->y = c->y;
+	add->z = c->z;
 	lst = init_lst();
-	ft_putendl("coucou");
 	while (lst->next)
 		lst = lst->next;
 	lst->next = add;
@@ -39,6 +40,7 @@ t_coord	*add_link(t_coord *c)
 void	disp_lst(t_coord *lst)
 {
 	lst = init_lst();
+	lst = lst->next;
 	while (lst)
 	{
 		printf("x = %d\ny = %d\nz = %d\n\n", lst->x, lst->y, lst->z);
