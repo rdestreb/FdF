@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/14 13:42:05 by rdestreb          #+#    #+#             */
-/*   Updated: 2014/12/16 18:43:37 by rdestreb         ###   ########.fr       */
+/*   Updated: 2014/12/20 11:50:47 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,28 +166,30 @@ void	draw_square(t_disp *d)
 	}
 }
 
-void	draw_cube(t_disp *d)
+void	draw_cube_para(t_disp *d)
 {
 	t_coord *c;
+	double		cst;
 
 	c = (t_coord *)ft_memalloc(sizeof(t_coord));
-	c->x = d->win_size * 0.25;
-	while (c->x <= d->win_size * 0.75)
+	cst = 1;
+	c->x = d->win_size * 0.2;
+	while (c->x <= d->win_size * 0.6)
 	{
-		c->y = d->win_size * 0.25;
-		while (c->y <= d->win_size * 0.75)
+		c->y = d->win_size * 0.2;
+		while (c->y <= d->win_size * 0.6)
 		{
 			c->z = -1;
-			while (++c->z <= 100)
+			while (++c->z <= (d->win_size * 0.6 - d->win_size * 0.2)/2)
 			{
-				if (c->x == d->win_size*0.75 && c->y == d->win_size*0.25)
-					mlx_pixel_put(d->mlx, d->win, c->x + c->z, c->y - c->z, 0x000000);
-				else if (c->y == d->win_size * 0.25)
-					mlx_pixel_put(d->mlx, d->win, c->x + c->z, c->y - c->z, 0x808080);
-				else if (c->x == d->win_size * 0.75)
-					mlx_pixel_put(d->mlx, d->win, c->x + c->z, c->y - c->z, 0x808080);
-				else
-					mlx_pixel_put(d->mlx, d->win, c->x + c->z, c->y - c->z, 0xFF6600);
+				if (c->x == d->win_size*0.6 && c->y == d->win_size*0.2)
+					mlx_pixel_put(d->mlx, d->win, c->x + c->z * cst, c->y - c->z * cst/2, 0x000000);
+				else if (c->y == d->win_size * 0.2)
+					mlx_pixel_put(d->mlx, d->win, c->x + c->z * cst, c->y - c->z * cst/2, 0x808080);
+				else if (c->x == d->win_size * 0.6)
+					mlx_pixel_put(d->mlx, d->win, c->x + c->z * cst, c->y - c->z* cst/2, 0x808080);
+					else if (c->z == 0)
+					mlx_pixel_put(d->mlx, d->win, c->x + c->z * cst, c->y - c->z * cst/2, 0xFF6600);
 			}
 			c->y++;
 		}
@@ -195,16 +197,86 @@ void	draw_cube(t_disp *d)
 	}
 }
 
+void	draw_cube_iso(t_disp *d)
+{
+	t_coord *c;
+	double	cst1;
+	double	cst2;
+
+	c = (t_coord *)ft_memalloc(sizeof(t_coord));
+	cst1 = 1;
+	cst2 = 1;
+//	c->x = d->win_size/2;
+	while (c->x <= 200)
+	{
+		c->y = 0;
+		while (c->y <= 200)
+		{
+			c->z = 0;
+			while (c->z <= 200)
+			{
+				if (c->x == 0 && c->y == 0)
+					mlx_pixel_put(d->mlx, d->win, d->win_size/2 + (c->x * cst1 - c->y * cst2), d->win_size/2 + (c->x * cst1/2 + c->y * cst2/2 - c->z), 0x000000);
+				else if (c->y == 0)
+					mlx_pixel_put(d->mlx, d->win, d->win_size/2 + (c->x * cst1 - c->y * cst2), d->win_size/2 + (c->x * cst1/2 + c->y * cst2/2 - c->z), 0x808080);
+				else if (c->x == 0)
+					mlx_pixel_put(d->mlx, d->win, d->win_size/2 + (c->x * cst1 - c->y * cst2), d->win_size/2 + (c->x * cst1/2 + c->y * cst2/2 - c->z), 0x808080);
+				else if (c->z == 0)
+					mlx_pixel_put(d->mlx, d->win, d->win_size/2 + (c->x * cst1 - c->y * cst2), d->win_size/2 + (c->x * cst1/2 + c->y * cst2/2 - c->z), 0xFF6600);
+				printf("x = %d\n", c->x);
+				printf("y = %d\n", c->y);
+				printf("z = %d\n\n", c->z);
+				c->z++;
+				}
+			c->y++;
+			}
+		c->x++;
+	}
+}
+
+void	draw_sphere(t_disp *d, int x0, int y0, int z0, int r)
+{
+	t_coord	*c;
+	float		cst1;
+//	double		cst2;
+	double	alpha;
+	double	beta;
+
+	alpha =  -M_PI / 2;
+	cst1 = 0.75;
+//	cst2 = 1;
+	c = (t_coord *)ft_memalloc(sizeof(t_coord));
+	while (alpha < M_PI / 2)
+	{
+		beta = -M_PI;
+		while (beta < M_PI)
+		{
+			c->x = r * cos(alpha) * cos(beta);
+			c->y = r * cos(alpha) * sin(beta);
+			c->z = r * sin(alpha) + z0;
+/* Projection Parallele */
+			mlx_pixel_put(d->mlx, d->win, x0 + c->x + c->z * cst1, c->y - c->z * cst1/2 + y0, 0xFF0000);
+/* Projection Isometrique */
+//			mlx_pixel_put(d->mlx, d->win, x0 + cst1 * c->x - cst2 * c->y, y0 + cst1/2 * c->x + cst2/2 * c->y - c->z, 0xFF0000);
+			usleep(5);
+			beta += (2 * M_PI) / (8 * r);
+		}
+		alpha += (2 * M_PI) / (8 * r);
+	}
+}
+
 int		expose_hook(t_disp *d)
 {
-	draw_rep(d);
+//	draw_rep(d);
 //	draw_function(d);
-	draw_diag(d);
+//	draw_diag(d);
 //	draw_square(d);
-//	draw_cube(d);
-	draw_circle(d, d->win_size/2, d->win_size/2, d->win_size/2);
-	draw_ellipse(d, d->win_size/2, d->win_size/2, 250, 400);
-	draw_ellipse(d, d->win_size/2, d->win_size/2, 400, 200);
+	draw_cube_para(d);
+//	draw_cube_iso(d);
+//	draw_circle(d, d->win_size/2, d->win_size/2, d->win_size/2);
+//	draw_ellipse(d, d->win_size/2, d->win_size/2, 250, 400);
+//	draw_ellipse(d, d->win_size/2, d->win_size/2, 400, 200);
+//	draw_sphere(d, d->win_size/2, d->win_size/2, 0, d->win_size/4);
 	return (0);
 }
 
@@ -233,7 +305,7 @@ int		mouse_hook(int button, int x, int y, t_disp *d)
 		}
 	i = -1;
 	if (button == 3)
-		while (++i < 10)
+		//while (++i < 10)
 			mlx_pixel_put(d->mlx, d->win, x-i, y, 0x000FF);
 	return(0);
 }
@@ -249,6 +321,7 @@ int		main(void)
 	mlx_expose_hook(d->win, expose_hook, d);
 	mlx_key_hook(d->win, key_hook, d);
 	mlx_mouse_hook(d->win, mouse_hook, d);
+//	mlx_loop_hook(d->mlx, key_hook, d);
 	mlx_loop(d->mlx);
 	return(0);
 }
