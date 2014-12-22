@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/20 14:41:45 by rdestreb          #+#    #+#             */
-/*   Updated: 2014/12/22 11:21:43 by rdestreb         ###   ########.fr       */
+/*   Updated: 2014/12/22 16:45:42 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,7 @@
 
 int     expose_hook(t_disp *d)
 {
-	t_coord	*c1;
-	t_coord	*c2;
-
-	c1 = init_lst();
-	c1 = c1->next;
-	while (c1 && c1->next)
-	{
-		c2 = (t_coord *)ft_memalloc(sizeof(t_coord));
-		if (c1->x < c1->next->x)
-		{
-			c2->X = c1->next->X;
-			c2->Y = c1->next->Y;
-			draw_line(d, c1, c2);
-		}
-//		mlx_pixel_put(d->mlx, d->win, c1->X, c1->Y, 0xFF6600);
-		c1 = c1->next;
-	}
+	draw_map(d);
 	return (0);
 }
 
@@ -40,7 +24,7 @@ int     key_hook(int keycode, t_disp *d)
 	printf("keycode = %d\n", keycode);
 	if (keycode == 65307)
 		exit(1);
-	return(0);
+	return (0);
 }
 
 int     mouse_hook(int button, int x, int y, t_disp *d)

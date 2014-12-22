@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/14 13:38:09 by rdestreb          #+#    #+#             */
-/*   Updated: 2014/12/22 09:38:50 by rdestreb         ###   ########.fr       */
+/*   Updated: 2014/12/22 16:40:05 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ int		key_hook(int keycode, t_disp *d);
 int		expose_hook(t_disp *d);
 t_coord	*init_lst(void);
 t_coord	*add_link(t_coord *c);
+t_coord	*get_next_y(t_coord *c);
 void	disp_lst(t_coord *lst);
 void	draw_line(t_disp *d, t_coord *p1, t_coord *p2);
+void	draw_map(t_disp *d);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/20 11:53:25 by rdestreb          #+#    #+#             */
-/*   Updated: 2014/12/22 10:58:44 by rdestreb         ###   ########.fr       */
+/*   Updated: 2014/12/22 16:47:44 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ void	projection(t_coord *c)
 {
 	int		x0 = 500;
 	int		y0 = 500;
-	int		zoom = 20;
+	int		zoom = 10;
 	double	cst = 1;
-	double	cst2 = 1;
+//	double	cst2 = 1;
 
 /* Proj parallele */
 
-//	c->X = (c->x  + cst * c->z) * zoom + x0;
-//	c->Y = (cst/2 * c->z - c->y) * zoom + y0;
+	c->X = (c->x  - cst * c->z) * zoom + x0;
+	c->Y = (cst/2 * c->z - c->y) * zoom + y0;
 
 /* Proj isometrique */
 
-	c->X = (cst * c->x - cst2 * c->z) * zoom + x0;
-	c->Y = (cst / 2 * c->x + cst2 / 2 * c->z - c->y) * zoom + y0;
+//	c->X = (cst * c->x - cst2 * c->z) * zoom + x0;
+//	c->Y = (cst / 2 * c->x + cst2 / 2 * c->z - c->y) * zoom + y0;
 
 }
 

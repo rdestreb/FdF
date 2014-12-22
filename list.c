@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/20 15:37:36 by rdestreb          #+#    #+#             */
-/*   Updated: 2014/12/22 10:40:47 by rdestreb         ###   ########.fr       */
+/*   Updated: 2014/12/22 16:44:28 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,21 @@ t_coord	*add_link(t_coord *c)
 		lst = lst->next;
 	lst->next = add;
 	return (lst);
+}
+
+t_coord *get_next_y(t_coord *c)
+{
+	t_coord	*lst;
+
+	lst = init_lst();
+	lst = lst->next;
+	while (lst)
+	{
+		if ((lst->x == c->x) && (lst->z == (c->z + 1)))
+			return (lst);
+		lst = lst->next;
+	}
+	return(NULL);
 }
 
 void	disp_lst(t_coord *lst)
