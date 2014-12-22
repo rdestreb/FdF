@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/20 11:53:25 by rdestreb          #+#    #+#             */
-/*   Updated: 2014/12/20 18:56:32 by rdestreb         ###   ########.fr       */
+/*   Updated: 2014/12/22 10:58:44 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,26 @@ void	print_error(char *error)
 	ft_putstr_fd("FdF: ", 2);
 	perror(error);
 	exit(1);
+}
+
+void	projection(t_coord *c)
+{
+	int		x0 = 500;
+	int		y0 = 500;
+	int		zoom = 20;
+	double	cst = 1;
+	double	cst2 = 1;
+
+/* Proj parallele */
+
+//	c->X = (c->x  + cst * c->z) * zoom + x0;
+//	c->Y = (cst/2 * c->z - c->y) * zoom + y0;
+
+/* Proj isometrique */
+
+	c->X = (cst * c->x - cst2 * c->z) * zoom + x0;
+	c->Y = (cst / 2 * c->x + cst2 / 2 * c->z - c->y) * zoom + y0;
+
 }
 
 t_coord	*get_coord(char *line, t_coord *lst)
@@ -35,6 +55,7 @@ t_coord	*get_coord(char *line, t_coord *lst)
 		c->x = i;
 		c->y = ft_atoi(points[i]);
 //		printf("x = %d\ny = %d\nz = %d\n\n", c->x, c->y, c->z);
+		projection(c);
 		lst = add_link(c);
 	}
 	ft_strdel(&line);

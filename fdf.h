@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/14 13:38:09 by rdestreb          #+#    #+#             */
-/*   Updated: 2014/12/20 18:44:35 by rdestreb         ###   ########.fr       */
+/*   Updated: 2014/12/22 09:38:50 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ struct	s_coord
 	int	x;
 	int	y;
 	int z;
+	int	X;
+	int	Y;
 	t_coord	*next;
 };
 
@@ -53,5 +55,6 @@ int		expose_hook(t_disp *d);
 t_coord	*init_lst(void);
 t_coord	*add_link(t_coord *c);
 void	disp_lst(t_coord *lst);
+void	draw_line(t_disp *d, t_coord *p1, t_coord *p2);
 
 #endif

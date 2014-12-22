@@ -5,75 +5,37 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/20 14:41:45 by rdestreb          #+#    #+#             */
-/*   Updated: 2014/12/20 19:08:12 by rdestreb         ###   ########.fr       */
+/*   Created: 2014/12/22 09:27:42 by rdestreb          #+#    #+#             */
+/*   Updated: 2014/12/22 11:05:29 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int     expose_hook(t_disp *d)
+void	draw_line(t_disp *d, t_coord *p1, t_coord *p2)
 {
-	double	cst;
-	int		X;
-	int		Y;
-	t_coord	*c;
+    int	o;
+    int	p;
 
-	c = init_lst();
-	c = c->next;
-	cst = 1;
-	while (c)
+	if (abs(p1->X - p2->X) >= abs(p1->Y - p2->Y))
 	{
-		X = (c->x * 20 + cst * c->z * 20);
-		Y = (cst/2 * c->z * 20 - c->y * 20);
-		mlx_pixel_put(d->mlx, d->win, X, Y + 500, 0xFF6600);
-		c = c->next;
-	}
-	return (0);
-}
-
-int     key_hook(int keycode, t_disp *d)
-{
-	d = d;
-	printf("keycode = %d\n", keycode);
-	if (keycode == 65307)
-		exit(1);
-	return(0);
-}
-
-int     mouse_hook(int button, int x, int y, t_disp *d)
-{
-	int i;
-
-	printf("button = %d(%d, %d)\n", button, x, y);
-    i = -1;
-    if (button == 1)
-		while (++i < 6)
+		o = p1->X;
+		while (abs(p1->X - p2->X))
 		{
-			mlx_pixel_put(d->mlx, d->win, x+i, y, 0xFF0000);
-			mlx_pixel_put(d->mlx, d->win, x+2*i, y+2*i, 0xFF0000);
-			mlx_pixel_put(d->mlx, d->win, x, y+i, 0xFF0000);
-			//          mlx_pixel_put(d->mlx, d->win, x,)
+			p = p1->Y + ((p1->X - o) * (p2->Y - p1->Y) / (p2->X - o));
+			mlx_pixel_put(d->mlx, d->win, p1->X, p, 0xFF6600);
+			(p1->X < p2->X ? p1->X++ : p1->X--);
 		}
-	i = -1;
-	if (button == 3)
-		//while (++i < 10)
-		mlx_pixel_put(d->mlx, d->win, x-i, y, 0x000FF);
-	return(0);
+	}
+	else
+	{
+		o = p1->Y;
+		while (abs(p1->Y - p2->Y))
+		{
+			p = p1->X + ((p1->Y - o) * (p2->X - p1->X) / (p2->Y - o));
+			mlx_pixel_put(d->mlx, d->win, p, p1->Y, 0x0000FF);
+			(p1->Y < p2->Y ? p1->Y++ : p1->Y--);
+		}
+	}
 }
 
-
-void	main_draw(void)
-{
-	t_disp  *d;
-
-	d = (t_disp *)ft_memalloc(sizeof(t_disp));
-	d->win_size = 1000;
-	d->mlx = mlx_init();
-	d->win = mlx_new_window(d->mlx, d->win_size, d->win_size, "test window");
-	mlx_expose_hook(d->win, expose_hook, d);
-	mlx_key_hook(d->win, key_hook, d);
-	mlx_mouse_hook(d->win, mouse_hook, d);
-//	mlx_loop_hook(d->mlx, key_hook, d);
-	mlx_loop(d->mlx);
-}
