@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/20 11:53:25 by rdestreb          #+#    #+#             */
-/*   Updated: 2014/12/22 16:47:44 by rdestreb         ###   ########.fr       */
+/*   Updated: 2014/12/23 14:01:53 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,30 @@ void	print_error(char *error)
 
 void	projection(t_coord *c)
 {
-	int		x0 = 500;
-	int		y0 = 500;
-	int		zoom = 10;
-	double	cst = 1;
-//	double	cst2 = 1;
+	t_param	*par;
 
-/* Proj parallele */
-
-	c->X = (c->x  - cst * c->z) * zoom + x0;
-	c->Y = (cst/2 * c->z - c->y) * zoom + y0;
-
+	c = init_lst();
+	c = c->next;
+	par = get_params();
+	while (c)
+	{
 /* Proj isometrique */
-
-//	c->X = (cst * c->x - cst2 * c->z) * zoom + x0;
-//	c->Y = (cst / 2 * c->x + cst2 / 2 * c->z - c->y) * zoom + y0;
-
+//	par->proj += 1;
+//	printf("%d\n", par->proj % 2);
+		if (((par->proj) % 2) == ISO)
+		{
+			c->X = (par->cst * c->x - par->cst2 * c->z) * par->zoom + par->x0;
+			c->Y = ((par->cst / 2) * c->x + (par->cst2 / 2) * c->z - c->y) *
+				par->zoom + par->y0;
+		}
+/* Proj parallele */
+		else
+		{
+			c->X = (c->x  - par->cst * c->z) * par->zoom + par->x0;
+			c->Y = (par->cst / 2 * c->z - c->y) * par->zoom + par->y0;
+		}
+		c = c->next;
+	}
 }
 
 t_coord	*get_coord(char *line, t_coord *lst)
@@ -55,7 +63,7 @@ t_coord	*get_coord(char *line, t_coord *lst)
 		c->x = i;
 		c->y = ft_atoi(points[i]);
 //		printf("x = %d\ny = %d\nz = %d\n\n", c->x, c->y, c->z);
-		projection(c);
+//		projection(c);
 		lst = add_link(c);
 	}
 	ft_strdel(&line);
@@ -80,7 +88,6 @@ void	read_map(char *path)
 		lst = get_coord(line, lst);
 	}
 //	disp_lst(lst);
-	main_draw();
 	close (fd);
 }
 
@@ -88,7 +95,7 @@ int		main(int ac, char **av)
 {
 	if (ac == 2)
 	{
-		read_map(av[1]);
+		main_draw(av[1]);
 	}
 	else
 		print_error("Can only read 1 argument");

@@ -6,12 +6,23 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/22 09:27:42 by rdestreb          #+#    #+#             */
-/*   Updated: 2014/12/22 16:43:03 by rdestreb         ###   ########.fr       */
+/*   Updated: 2014/12/23 11:57:17 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+/*
+void	draw_color(t_disp *d, int x, int y)
+{
+	t_colors	*col;
+
+	col = (t_colors *)ft_memalloc(sizeof(t_colors));
+
+	mlx_pixel_put(d->mlx, d->win, cpt, p, 0xcol->r);
+
+}
+*/
 void	draw_line(t_disp *d, t_coord *p1, t_coord *p2)
 {
     int	cpt;
