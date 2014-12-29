@@ -41,14 +41,20 @@ void	print_hud(t_disp *d)
 
 	par = get_params();
 	mlx_string_put(d->mlx, d->win, d->win_size / 25, d->win_size / 25, 0xFFFFFF,
-				   "Shift projection = Space Bar");
+				   "Shift projection = Middle mouse button");
 	mlx_string_put(d->mlx, d->win, d->win_size / 25, d->win_size / 19, 0xFFFFFF,
 				   "Move map = Arrows");
 	mlx_string_put(d->mlx, d->win, d->win_size / 25, d->win_size / 15, 0xFFFFFF,
 				   "Zoom/Dezoom = Mouse wheel");
+	mlx_string_put(d->mlx, d->win, d->win_size / 25, d->win_size / 12, 0xFFFFFF,
+				   "Orientation +/- = Home/End");
 	if (((par->proj) % 2) == ISO)
+	{
 		mlx_string_put(d->mlx, d->win, d->win_size / 2.5, d->win_size * 0.95,
 					   0x00FF00, "Curent projection = ISO");
+		mlx_string_put(d->mlx, d->win, d->win_size / 25, d->win_size / 10, 0xFFFFFF,
+				   "Orientation 2 +/- = PgUp/PgDn");
+	}
 	else
 		mlx_string_put(d->mlx, d->win, d->win_size / 2.5, d->win_size * 0.95,
 					   0xFF0000, "Curent projection = PARA");
@@ -78,8 +84,14 @@ int     key_hook(int keycode, t_disp *d)
 		par->x0 += 10;
 	if (keycode == 65364)
 		par->y0 += 10;
-	if (keycode == 32)
-		par->proj += 1;
+	if (keycode == 65367 && par->cst > 0)
+		par->cst -= 0.1;
+	if (keycode == 65360 && par->cst < 2)
+		par->cst += 0.1;
+	if (keycode == 65365 && par->cst2 < 2)
+		par->cst2 += 0.1;
+	if (keycode == 65366 && par->cst2 > 0)
+		par->cst2 -= 0.1;
 	mlx_clear_window(d->mlx, d->win);
 	expose_hook(d);
 	return (0);
@@ -91,7 +103,9 @@ int     mouse_hook(int button, int x, int y, t_disp *d)
 
 	par = get_params();
 	printf("button = %d(%d, %d)\n", button, x, y);
-    if (button == 4 && par->zoom < 100)
+	if (button == 2)
+		par->proj += 1;
+	if (button == 4 && par->zoom < 100)
 		par->zoom += 1;
 	if (button == 5 && par->zoom > 0)
 		par->zoom -= 1;
@@ -106,7 +120,7 @@ void	main_draw(char *path)
 	t_disp		*d;
 
 	d = (t_disp *)ft_memalloc(sizeof(t_disp));
-	d->win_size = 1000;
+	d->win_size = 500;
 	init_params(d);
 	read_map(path);
 	d->mlx = mlx_init();
