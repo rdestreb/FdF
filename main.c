@@ -91,13 +91,47 @@ void	read_map(char *path)
 	close (fd);
 }
 
+void	is_valid(char *path)
+{
+	int		fd;
+	int		ret;
+	int		i;
+	char	buff[BUFF_SIZE + 1];
+
+	if(!(fd = open(path, O_RDONLY, S_IRUSR)))
+		print_error("Open failure");
+	while ((ret = read(fd, buff, BUFF_SIZE)))
+	{
+		i = -1;
+		buff[ret] = 0;
+		while (buff[++i])
+		{
+			if (!(ft_isdigit(buff[i])) && buff[i] != '-' && buff[i] != ' ' && buff[i] != '\n')
+			{
+				ft_putstr_fd("Error : Map is invalid\n", 2);
+				exit(1);
+			}
+		}
+	}
+	close(fd);
+}
+
 int		main(int ac, char **av)
 {
 	if (ac == 2)
 	{
+		is_valid(av[1]);
 		main_draw(av[1]);
 	}
+	else if (ac == 1)
+	{
+		ft_putstr_fd("Error : missing argument\n", 2);
+		exit(1);
+	}
 	else
-		print_error("Can only read 1 argument");
+	{
+		ft_putstr_fd("Error : Can only read 1 map\n", 2);
+		exit(1);
+	}
 	return (0);
 }

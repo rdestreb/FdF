@@ -26,6 +26,7 @@
 
 # define ISO 0
 # define PARA 1
+//# define BUFF_SIZE 1;
 
 typedef struct s_coord t_coord;
 typedef struct s_disp t_disp;
