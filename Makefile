@@ -6,7 +6,7 @@
 #    By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/25 10:38:16 by rdestreb          #+#    #+#              #
-#    Updated: 2014/12/22 09:27:35 by rdestreb         ###   ########.fr        #
+#    Updated: 2015/01/05 10:13:58 by rdestreb         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -20,7 +20,7 @@ SRC =	main.c \
 		mlx.c \
 		draw.c \
 		list.c \
-#		play_mlx.c
+		params.c
 
 OBJS = $(SCRFILES:.c=.o)
 CC = gcc
