@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/20 15:37:36 by rdestreb          #+#    #+#             */
-/*   Updated: 2015/01/05 10:06:36 by rdestreb         ###   ########.fr       */
+/*   Updated: 2015/01/05 10:49:30 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ t_coord	*add_link(t_coord *c)
 	add->x = c->x;
 	add->y = c->y;
 	add->z = c->z;
-	add->X = c->X;
-	add->Y = c->Y;
+	add->xp = c->xp;
+	add->yp = c->yp;
 	lst = init_lst();
 	while (lst->next)
 		lst = lst->next;
