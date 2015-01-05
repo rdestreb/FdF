@@ -6,13 +6,13 @@
 #    By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/25 10:38:16 by rdestreb          #+#    #+#              #
-#    Updated: 2015/01/05 10:13:58 by rdestreb         ###   ########.fr        #
+#    Updated: 2015/01/05 11:16:05 by rdestreb         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 NAME = fdf
-SRCDIR = ./
-HEADDIR = ./
+SRCDIR = ./src/
+HEADDIR = ./src/
 HEAD = fdf.h
 HEADFILES = $(addprefix $(HEADDIR)/, $(HEAD))
 SCRFILES = $(addprefix $(SRCDIR)/, $(SRC))

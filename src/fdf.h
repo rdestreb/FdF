@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/14 13:38:09 by rdestreb          #+#    #+#             */
-/*   Updated: 2015/01/05 10:26:41 by rdestreb         ###   ########.fr       */
+/*   Updated: 2015/01/05 11:16:34 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
-# include "libft/libft.h"
+# include "../libft/libft.h"
 
 # define ISO 0
 # define PARA 1
