@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/20 11:53:25 by rdestreb          #+#    #+#             */
-/*   Updated: 2015/01/05 10:03:11 by rdestreb         ###   ########.fr       */
+/*   Updated: 2015/01/06 12:20:23 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	read_map(char *path)
 	t_coord	*lst;
 	char	*line;
 
-	if (!(fd = open(path, O_RDONLY, S_IRUSR)))
+	fd = open(path, O_RDONLY, S_IRUSR);
+	if (fd == -1)
 		print_error("Open failure");
 	while ((gnl = get_next_line (fd, &line)) > 0)
 	{
@@ -66,7 +67,8 @@ void	is_valid(char *path)
 	int		i;
 	char	buff[BUFF_SIZE + 1];
 
-	if (!(fd = open(path, O_RDONLY, S_IRUSR)))
+	fd = open(path, O_RDONLY, S_IRUSR);
+	if (fd == -1)
 		print_error("Open failure");
 	while ((ret = read(fd, buff, BUFF_SIZE)))
 	{

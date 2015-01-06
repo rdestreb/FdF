@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/20 14:41:45 by rdestreb          #+#    #+#             */
-/*   Updated: 2015/01/05 10:21:38 by rdestreb         ###   ########.fr       */
+/*   Updated: 2015/01/06 12:11:25 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int		key_hook(int keycode, t_disp *d)
 	t_param	*par;
 
 	par = get_params();
-	printf("keycode = %d\n", keycode);
 	if (keycode == 65307)
 		exit(1);
 	if (keycode == 65361)
@@ -79,7 +78,8 @@ int		mouse_hook(int button, int x, int y, t_disp *d)
 	t_param	*par;
 
 	par = get_params();
-	printf("button = %d(%d, %d)\n", button, x, y);
+	x = x;
+	y = y;
 	if (button == 3)
 		par->proj += 1;
 	if (button == 4 && par->zoom < 100)
