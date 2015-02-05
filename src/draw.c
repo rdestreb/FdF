@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/22 09:27:42 by rdestreb          #+#    #+#             */
-/*   Updated: 2015/01/05 10:34:42 by rdestreb         ###   ########.fr       */
+/*   Updated: 2015/02/05 20:08:53 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	draw_line(t_disp *d, t_coord *p1, t_coord *p2)
 		while (abs(cpt - p2->xp))
 		{
 			p = p1->yp + (cpt - p1->xp) * (p2->yp - p1->yp) / (p2->xp - p1->xp);
-			mlx_pixel_put(d->mlx, d->win, cpt, p, 0xFF6600);
+			//mlx_pixel_put(d->mlx, d->win, cpt, p, 0xFF6600);
+			mlx_pxl_to_image(d->img, cpt, p, 500);
 			(cpt < p2->xp ? cpt++ : cpt--);
 		}
 	}
@@ -57,7 +58,8 @@ void	draw_line(t_disp *d, t_coord *p1, t_coord *p2)
 		while (abs(cpt - p2->yp))
 		{
 			p = p1->xp + (cpt - p1->yp) * (p2->xp - p1->xp) / (p2->yp - p1->yp);
-			mlx_pixel_put(d->mlx, d->win, p, cpt, 0x0000FF);
+			//mlx_pixel_put(d->mlx, d->win, p, cpt, 0x0000FF);
+			mlx_pxl_to_image(d->img, p, cpt, 500);
 			(cpt < p2->yp ? cpt++ : cpt--);
 		}
 	}

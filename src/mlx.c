@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/20 14:41:45 by rdestreb          #+#    #+#             */
-/*   Updated: 2015/01/06 12:11:25 by rdestreb         ###   ########.fr       */
+/*   Updated: 2015/02/05 20:13:46 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ void	print_hud(t_disp *d)
 
 int		expose_hook(t_disp *d)
 {
-	projection(d->c);
-	draw_map(d);
+	mlx_put_image_to_window(d->mlx, d->win, d->img->ptr, 0, 0);
 	print_hud(d);
 	return (0);
 }
@@ -50,26 +49,29 @@ int		key_hook(int keycode, t_disp *d)
 	t_param	*par;
 
 	par = get_params();
-	if (keycode == 65307)
-		exit(1);
-	if (keycode == 65361)
-		par->x0 -= 10;
-	if (keycode == 65362)
-		par->y0 -= 10;
-	if (keycode == 65363)
-		par->x0 += 10;
-	if (keycode == 65364)
-		par->y0 += 10;
-	if (keycode == 65367 && par->cst > 0)
-		par->cst -= 0.1;
-	if (keycode == 65360 && par->cst < 2)
-		par->cst += 0.1;
-	if (keycode == 65365 && par->cst2 < 2)
-		par->cst2 += 0.1;
-	if (keycode == 65366 && par->cst2 > 0)
-		par->cst2 -= 0.1;
-	mlx_clear_window(d->mlx, d->win);
-	expose_hook(d);
+	if (keycode)
+	{
+		if (keycode == 65307)
+			exit(1);
+		if (keycode == 65361)
+			par->x0 -= 10;
+		if (keycode == 65362)
+			par->y0 -= 10;
+		if (keycode == 65363)
+			par->x0 += 10;
+		if (keycode == 65364)
+			par->y0 += 10;
+		if (keycode == 65367 && par->cst > 0)
+			par->cst -= 0.1;
+		if (keycode == 65360 && par->cst < 2)
+			par->cst += 0.1;
+		if (keycode == 65365 && par->cst2 < 2)
+			par->cst2 += 0.1;
+		if (keycode == 65366 && par->cst2 > 0)
+			par->cst2 -= 0.1;
+		//	mlx_clear_window(d->mlx, d->win);
+		redraw_image(d);
+	}
 	return (0);
 }
 
@@ -80,14 +82,17 @@ int		mouse_hook(int button, int x, int y, t_disp *d)
 	par = get_params();
 	x = x;
 	y = y;
-	if (button == 3)
-		par->proj += 1;
-	if (button == 4 && par->zoom < 100)
-		par->zoom += 1;
-	if (button == 5 && par->zoom > 0)
-		par->zoom -= 1;
-	mlx_clear_window(d->mlx, d->win);
-	expose_hook(d);
+	if (button)
+	{
+		if (button == 3)
+			par->proj += 1;
+		if (button == 4 && par->zoom < 100)
+			par->zoom += 1;
+		if (button == 5 && par->zoom > 1)
+			par->zoom -= 1;
+		//mlx_clear_window(d->mlx, d->win);
+		redraw_image(d);
+	}
 	return (0);
 }
 
@@ -101,6 +106,9 @@ void	main_draw(char *path)
 	read_map(path);
 	d->mlx = mlx_init();
 	d->win = mlx_new_window(d->mlx, d->win_size, d->win_size, "test window");
+	create_image(d);
+	projection(d->c);
+	draw_map(d);
 	mlx_expose_hook(d->win, expose_hook, d);
 	mlx_key_hook(d->win, key_hook, d);
 	mlx_mouse_hook(d->win, mouse_hook, d);
