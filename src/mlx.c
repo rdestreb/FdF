@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/20 14:41:45 by rdestreb          #+#    #+#             */
-/*   Updated: 2015/02/06 20:46:45 by rdestreb         ###   ########.fr       */
+/*   Updated: 2015/02/06 20:53:52 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,5 @@ void	main_draw(char *path)
 	mlx_expose_hook(d->win, expose_hook, d);
 	mlx_key_hook(d->win, key_hook, d);
 	mlx_mouse_hook(d->win, mouse_hook, d);
-	mlx_hook(d->win, 2, (1L<<0), key_hook, d);
 	mlx_loop(d->mlx);
 }
