@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/14 13:38:09 by rdestreb          #+#    #+#             */
-/*   Updated: 2015/02/05 19:40:38 by rdestreb         ###   ########.fr       */
+/*   Updated: 2015/02/06 19:24:06 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_coord	t_coord;
 typedef struct s_disp	t_disp;
 typedef struct s_image	t_image;
 typedef struct s_param	t_param;
-typedef struct s_color	t_color;
 
 struct	s_coord
 {
@@ -53,13 +52,6 @@ struct	s_param
 	int		proj;
 	int		abs;
 	int		ord;
-};
-
-struct	s_color
-{
-	unsigned int	r;
-	unsigned int	g;
-	unsigned int	b;
 };
 
 struct	s_image
@@ -100,8 +92,8 @@ void	projection(t_coord *c);
 void	draw_line(t_disp *d, t_coord *p1, t_coord *p2);
 void	draw_map(t_disp *d);
 int		mlx_pxl_to_image(t_image *img, int x, int y, int color);
-int		rgb_to_int(t_color *rgb);
 void	redraw_image(t_disp *d);
 void	create_image(t_disp *d);
+void	print_hud(t_disp *d);
 
 #endif

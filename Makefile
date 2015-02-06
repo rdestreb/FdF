@@ -6,7 +6,7 @@
 #    By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/25 10:38:16 by rdestreb          #+#    #+#              #
-#    Updated: 2015/02/05 19:15:54 by rdestreb         ###   ########.fr        #
+#    Updated: 2015/02/06 19:23:34 by rdestreb         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -18,6 +18,7 @@ HEADFILES = $(addprefix $(HEADDIR)/, $(HEAD))
 SCRFILES = $(addprefix $(SRCDIR)/, $(SRC))
 SRC =	main.c \
 		mlx.c \
+		hook.c \
 		draw.c \
 		list.c \
 		params.c \
