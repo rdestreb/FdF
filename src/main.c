@@ -6,7 +6,7 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/20 11:53:25 by rdestreb          #+#    #+#             */
-/*   Updated: 2015/02/06 18:46:15 by rdestreb         ###   ########.fr       */
+/*   Updated: 2015/02/06 20:32:56 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	is_valid(char *path)
 	int		i;
 	char	buff[BUFF_SIZE + 1];
 
+	if (open(path, O_DIRECTORY) > -1)
+		exit(1);
 	fd = open(path, O_RDONLY, S_IRUSR);
 	if (fd == -1)
 		print_error("Open failure");
