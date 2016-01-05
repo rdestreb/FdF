@@ -6,14 +6,14 @@
 /*   By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/14 13:38:09 by rdestreb          #+#    #+#             */
-/*   Updated: 2015/02/06 19:24:06 by rdestreb         ###   ########.fr       */
+/*   Updated: 2015/12/17 18:54:26 by rdestreb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# include <mlx.h>
+# include "../minilibx_macos/mlx.h"
 # include <math.h>
 # include <stdio.h>
 # include <sys/types.h>

@@ -6,13 +6,13 @@
 #    By: rdestreb <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/25 10:38:16 by rdestreb          #+#    #+#              #
-#    Updated: 2015/02/06 19:34:49 by rdestreb         ###   ########.fr        #
+#    Updated: 2015/12/17 19:07:29 by rdestreb         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 NAME = fdf
-SRCDIR = ./src/
-HEADDIR = ./src/
+SRCDIR = ./src
+HEADDIR = ./src
 HEAD = fdf.h
 HEADFILES = $(addprefix $(HEADDIR)/, $(HEAD))
 SCRFILES = $(addprefix $(SRCDIR)/, $(SRC))
@@ -25,15 +25,16 @@ SRC =	main.c \
 		image.c
 
 OBJS = $(SCRFILES:.c=.o)
-CC = gcc
+CC = clang
 CFLAGS = -O3 -Wall -Werror -Wextra
-LDFLAGS = -L ./libft/ -lft -L/usr/X11/lib -lmlx -lXext -lX11
+LDFLAGS = -L ./libft/ -lft -L ./minilibx_macos/ -lmlx -framework OpenGL -framework AppKit
+
 LIBFT = ./libft/libft.a
 
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) -o $(NAME) $(OBJS) $(LDFLAGS)
+	$(CC) -o $(NAME) $(LDFLAGS) $(OBJS)
 
 $(LIBFT):
 	$(MAKE) -C ./libft/
